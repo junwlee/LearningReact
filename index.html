@@ -7,20 +7,59 @@
 <body>
 <div id="root"></div>
 </body>
-<script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18.0.0/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.0.0/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
     const App = () => {
-        const [count, setCount] = React.useState(0);
-        const onClick = () => {
-            setCount((current) => current + 1);
-        };
+        // Set the initial state to 0 to make it a controlled input.
+        const [amount, setAmount] = React.useState(0);
+        const [inverted, setInverted] = React.useState(false);
+
+        const onChange = (event) => {
+            // Check if the input value is valid, use 0 if it's not.
+            const newValue = event.target.value === '' ? 0 : Number(event.target.value);
+            setAmount(newValue);
+        }
+
+        const reset = () => setAmount(0);
+
+        const onInvert = () => {
+            reset();
+            setInverted((current) => !current)
+        }
+
         return (
             <div>
-                <h3>Total Clicks: {count}</h3>
-                <button onClick={onClick}>Click Me!</button>
-            </div>)
+                <h1>Super Converter</h1>
+                <div>
+                    <label htmlFor="minutes">Minutes</label>
+                    <input
+                        value={inverted ? amount * 60 : amount}
+                        id="minutes"
+                        placeholder="Minutes"
+                        type="number"
+                        onChange={onChange}
+                        disabled={inverted}
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="hours">Hours</label>
+                    <input
+                        value={inverted ? amount : Math.round(amount / 60)}
+                        id="hours"
+                        placeholder="Hours"
+                        type="number"
+                        onChange={onChange}
+                        disabled={!inverted}
+                    />
+                </div>
+
+                <button onClick={reset}>Reset</button>
+                <button onClick={onInvert}>{inverted ? "Turn back" : "Invert"}</button>
+            </div>
+        )
     }
 
     const root = document.querySelector("#root");
