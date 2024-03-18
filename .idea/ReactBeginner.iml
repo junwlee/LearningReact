@@ -15,6 +15,7 @@
     <orderEntry type="library" name="react" level="application" />
     <orderEntry type="library" name="react-dom" level="application" />
     <orderEntry type="library" name="@babel/standalone" level="application" />
+    <orderEntry type="library" name="prop-types" level="application" />
   </component>
   <component name="SonarLintModuleSettings">
     <option name="uniqueId" value="d0362861-84c9-4c7b-a87d-3fadc734a6af" />
